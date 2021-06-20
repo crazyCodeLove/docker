@@ -1,0 +1,15 @@
+FROM alpine:3.9.2
+
+RUN apk add --update openjdk8-jre  bash gcompat
+
+ENV SCALA_VERSION 2.13
+ENV KAFKA_VERSION 2.7.0
+ENV KAFKA_HOME /opt/kafka
+ENV KAFKA_DOWNLOAD_URL https://archive.apache.org/dist/kafka/"$KAFKA_VERSION"/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION".tgz
+
+RUN wget -q $KAFKA_DOWNLOAD_URL -O /tmp/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION".tgz \
+&& tar xfz /tmp/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION".tgz -C /opt \
+&& rm /tmp/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION".tgz \
+&& ln -s /opt/kafka_${SCALA_VERSION}-${KAFKA_VERSION} ${KAFKA_HOME}
+
+CMD ["$KAFKA_HOME/bin/kafka-server-start.sh","$KAFKA_HOME/config/server.properties"]
