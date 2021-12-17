@@ -2,7 +2,7 @@
 
 ####  使用官方 REDIS 镜像
 ```shell script
-docker run --name redis -p 6379:6379 -d redis:6
+docker run --name redis -p 6379:6379 -d redis:6.2.6
 ```
 
 ***
@@ -22,3 +22,7 @@ CMD [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
 docker run -v /myredis/conf/redis.conf:/usr/local/etc/redis/redis.conf --name redis -p 6379:6379 -d redis:6
 ```
 
+- 设置 REDIS 密码为“123456”
+```shell
+docker run --name redis -p 6379:6379 -d redis:6.2.6 --requirepass 123456
+```
